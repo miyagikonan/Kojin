@@ -18,9 +18,11 @@ public class PgTaskDao implements TaskDao {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("login_id",login_id);
         parameterSource.addValue("password",password);
+        System.out.println(login_id);
+        System.out.println(password);
 
         var list = jdbcTemplate.query("SELECT * FROM users0 WHERE login_id = :login_id AND password = :password",
                                        parameterSource, new DataClassRowMapper<>(UserRecord.class));
-        return list.get(0);
+        return list.isEmpty() ? null : list.get(0);
     }
 }

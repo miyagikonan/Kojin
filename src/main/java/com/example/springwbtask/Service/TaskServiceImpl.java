@@ -13,6 +13,8 @@ public class TaskServiceImpl implements TaskService {
 
     //ログイン
     @Override
-    public UserRecord Login(String login_id, String password);
+    public UserRecord Login(String login_id, String password){
+        return taskDao.Login(login_id,password);
+    }
 
 }
