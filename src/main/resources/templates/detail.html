@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>商品詳細</title>
-<link href="css/commons.css" rel="stylesheet">
+<link href="/css/commons.css" rel="stylesheet">
 </head>
 <body>
 
@@ -25,38 +25,38 @@
       <div class="img_block">
         <img src="/images/マッキー.png" class="product-img"><br>
       </div>
-      <form action="delete" method="post">
+
+      <form action="/menu" method="get" >
         <fieldset class="label-130 product_block">
           <p class="error">エラーメッセージ</p>
           <div>
             <label>商品ID</label>
-            <input type="text" name="productId" value="10001" readonly class="base-text">
+            <input type="text" name="productId" th:value="${product.product_id}" readonly class="base-text">
           </div>
           <div>
             <label>商品名</label>
-            <input type="text" name="name" value="マッキー(黒)" readonly class="base-text">
+            <input type="text" name="name" th:value="${product.pname}" readonly class="base-text">
           </div>
           <div>
             <label>単価</label>
-            <input type="text" name="price" value="165" readonly class="base-text">
+            <input type="text" name="price" th:value="${product.price}" readonly class="base-text">
           </div>
           <div>
             <label>カテゴリ</label>
-            <input type="text" name="categoryId" value="ペン" readonly class="base-text">
+            <input type="text" name="categoryId" th:value="${product.cname}" readonly class="base-text">
           </div>
           <div>
             <label>商品説明</label>
-            <textarea name="description" readonly class="base-text" style="background-color: rgb(209, 209, 209);">
-ゼブラ株式会社
-線の太さ：太6.0mm、細1.5～2.0mm
+            <textarea name="description" readonly class="base-text" style="background-color: rgb(209, 209, 209);" th:text="${product.description}">
             </textarea>
           </div>
         </fieldset>
+
         <div>
           <div class="btns">
-            <input type="button" onclick="openModal()" value="削除" class="basic-btn">
-            <input type="button" onclick="location.href='./updateInput.html'" value="編集" class="basic-btn">
-            <input type="button" onclick="location.href='./menu.html'" value="戻る" class="cancel-btn">
+            <input type="submit" value="削除" class="basic-btn">
+            <a th:href="@{/updateInput/{id}(id=${product.id})}" class="basic-btn">編集</a>
+            <input type="button" onclick="location.href='/menu'" value="戻る" class="cancel-btn">
           </div>
           <div id="modal">
             <p class="modal-message">削除しますか？</p>

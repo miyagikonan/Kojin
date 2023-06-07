@@ -57,76 +57,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>10001</td>
-          <td>マッキー(黒)</td>
-          <td>160</td>
-          <td>筆記具</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
+        <tr th:each="product : ${products}">
+          <td th:text="${product.product_id}"></td>
+          <td th:text="${product.pname}"></td>
+          <td th:text="${product.price}"></td>
+          <td th:text="${product.cname}"></td>
+          <td><a class="detail_btn"  th:text="${'詳細'}" th:href="@{/detail/{id}(id=${product.id})}"></a></td>
         </tr>
-        <tr>
-          <td>10002</td>
-          <td>電卓</td>
-          <td>935</td>
-          <td>オフィス機器</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
-        </tr>
-        <tr>
-          <td>10003</td>
-          <td>ホッチキス芯</td>
-          <td>220</td>
-          <td>事務消耗品</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
-        </tr>
-        <tr>
-          <td>10004</td>
-          <td>Campus(5冊組)</td>
-          <td>220</td>
-          <td>紙製品</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
-        </tr>
-        <tr>
-          <td>10005</td>
-          <td>地球儀</td>
-          <td>160</td>
-          <td>雑貨</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
-        </tr>
-        <tr>
-          <td>10006</td>
-          <td>ロジカルノート(5冊組)</td>
-          <td>386</td>
-          <td>紙製品</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
-        </tr>
-        <tr>
-          <td>10007</td>
-          <td>レジスター</td>
-          <td>130</td>
-          <td>オフィス用品</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
-        </tr>
-        <tr>
-          <td>10008</td>
-          <td>カドケシ</td>
-          <td>150</td>
-          <td>筆記具</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
-        </tr>
-        <tr>
-          <td>10009</td>
-          <td>アラビックヤマト</td>
-          <td>220</td>
-          <td>事務用品</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
-        </tr>
-        <tr>
-          <td>10010</td>
-          <td>粘土</td>
-          <td>160</td>
-          <td>雑貨</td>
-          <td><a class="detail_btn" href="./detail.html">詳細</a></td>
-        </tr>
+
       </tbody>
     </table>
   </div>
