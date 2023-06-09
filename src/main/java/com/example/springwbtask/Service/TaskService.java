@@ -1,8 +1,6 @@
 package com.example.springwbtask.Service;
 
-import com.example.springwbtask.Record.ProductRecord;
-import com.example.springwbtask.Record.TaskListRecord;
-import com.example.springwbtask.Record.UserRecord;
+import com.example.springwbtask.Record.*;
 
 import java.util.List;
 
@@ -16,8 +14,14 @@ public interface TaskService {
     //詳細画面
     public ProductRecord findById(int id);
 
+    //カテゴリ
+    public List<CategoryRecord> categoryAll();
+
     //更新
-    public int update(ProductRecord productRecord);
+    public int update(ProductRecord updateRecord);
+
+    //新規登録
+    public int insert(InsertRecord insertRecord);
 
     //削除
     public int delete(int id);

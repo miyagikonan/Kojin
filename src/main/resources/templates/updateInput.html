@@ -23,29 +23,34 @@
     <div class="form-body">
       <p class="error">エラーメッセージ</p>
 
-      <form action="/menu" method="get" th:object="${ProductForm}">
+      <form th:action="@{/updateInput/{id}(id=${product.id})}" method="post" th:object="${ProductForm}">
         <fieldset class="label-130">
           <div>
             <label>商品ID</label>
-            <input type="text" name="productId" th:field="*{product_id}" class="base-text">
-            <span class="error">エラーメッセージ</span>
+            <input type="text" name="product_id" th:field="*{product_id}" class="base-text">
+            <span class="error" th:each="error: ${#fields.errors('product_id')}">
+              [[ ${error} ]]
+            </span>
           </div>
           <div>
             <label>商品名</label>
-            <input type="text" name="name" th:field="*{pname}" class="base-text">
-            <span class="error">エラーメッセージ</span>
+            <input type="text" name="pname" th:field="*{pname}" class="base-text">
+            <span class="error" th:each="error: ${#fields.errors('pname')}">
+              [[ ${error} ]]
+            </span>
           </div>
           <div>
             <label>単価</label>
             <input type="text" name="price" th:field="*{price}" class="base-text">
-            <span class="error">エラーメッセージ</span>
+            <span class="error" th:each="error: ${#fields.errors('price')}">
+              [[ ${error} ]]
+            </span>
           </div>
           <div>
-            <label>カテゴリ</label> <select name="categoryId" class="base-text" th:field="*{cname}" >
-              <option value="1" selected>ペン</option>
-              <option value="2">ノート</option>
-              <option value="3">消しゴム</option>
-              <option value="4">のり</option>
+            <label>カテゴリ</label>
+            <select name="categoryId" class="base-text" th:field="*{category_id}">
+              <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+
             </select>
           </div>
           <div>
@@ -60,7 +65,7 @@
           </div>
         </fieldset>
           <div class="btns">
-            <button type="button" onclick="openModal()" class="basic-btn">更新</button>
+            <button type="submit" onclick="openModal()" class="basic-btn">更新</button>
             <input type="button" onclick="location.href='/menu'" value="メニューに戻る" class="cancel-btn">
           </div>
           <div id="modal">

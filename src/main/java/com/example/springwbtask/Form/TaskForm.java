@@ -10,11 +10,4 @@ public class TaskForm {
     @NotEmpty(message = "パスワードは必須です")
     private String pass;
 
-    //更新
-    private String image_path;
-    private String product_id;
-    private String pname;
-    private int price;
-    private String cname;
-    private String description;
 }

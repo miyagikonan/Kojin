@@ -1,9 +1,13 @@
 package com.example.springwbtask.Controller;
 
 
+import com.example.springwbtask.Form.CategoryForm;
+import com.example.springwbtask.Form.InsertForm;
 import com.example.springwbtask.Form.ProductForm;
 import com.example.springwbtask.Form.TaskForm;
+import com.example.springwbtask.Record.InsertRecord;
 import com.example.springwbtask.Record.ProductRecord;
+import com.example.springwbtask.Record.UpdateRecord;
 import com.example.springwbtask.Record.UserRecord;
 import com.example.springwbtask.Service.TaskService;
 import com.example.springwbtask.Service.TaskServiceImpl;
@@ -61,7 +65,34 @@ public class TaskController {
     }
 
 
-    //新規登録画面
+//新規登録画面
+    @GetMapping("/insert")
+    public String in(@ModelAttribute("InsertForm")InsertForm insertForm,
+                     @ModelAttribute("CategoryForm")CategoryForm categoryForm,
+                     Model model){
+        model.addAttribute("categories",taskService.categoryAll());
+        return "insert";
+    }
+
+    @PostMapping("/insert")
+    public String insert(@Validated @ModelAttribute("InsertForm")InsertForm insertForm,
+                            BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "insert";
+        }
+
+        System.out.println(insertForm);
+        String product_id = insertForm.getProduct_id();
+        String name = insertForm.getName();
+        int price = insertForm.getPrice();
+        int category_id = insertForm.getCategory_id();
+        String description = insertForm.getDescription();
+        InsertRecord insert = new InsertRecord(product_id,name,price,category_id, description);
+        System.out.println(insert);
+
+        taskService.insert(insert);
+        return "redirect:/menu";
+    }
 
 
 
@@ -72,10 +103,19 @@ public class TaskController {
         return "detail";
     }
 
+    //カテゴリ
+    @GetMapping("updateInput")
+    public String categorylist(Model model){
+        var result = model.addAttribute("categories",taskService.categoryAll());
+        System.out.println(result);
+        return "updateInput";
+    }
+
     //商品の更新
     @GetMapping("/updateInput/{id}")
-    public String up(@ModelAttribute("TaskForm") ProductForm productForm, int id, Model model){
-        productForm = new ProductForm();
+    public String up(@ModelAttribute("ProductForm") ProductForm productForm,
+                     @ModelAttribute("CategoryForm")CategoryForm categoryForm,
+                     @PathVariable("id") int id, Model model){
         var result = taskService.findById(id);
         productForm.setImage_path(result.image_path());
         productForm.setProduct_id(result.product_id());
@@ -83,21 +123,40 @@ public class TaskController {
         productForm.setPrice(result.price());
         productForm.setCname(result.cname());
         productForm.setDescription(result.description());
+        productForm.setCategory_id(result.category_id());
+        categoryForm.setId(result.category_id());
 
+        var res = model.addAttribute("categories",taskService.categoryAll());
+//        System.out.println(res);
+
+        var re = model.addAttribute("product", taskService.findById(id));
         return "updateInput";
     }
 
-    @RequestMapping(value = "/updateInput/{id}", params = "updateInput",method = RequestMethod.POST)
-    public String update(@ModelAttribute("ProductForm") ProductForm productForm,
+    @PostMapping("/updateInput/{id}")
+    public String update(@Validated @ModelAttribute("ProductForm") ProductForm productForm,
+                         BindingResult bindingResult,
                          @PathVariable("id") int id,
                          Model model){
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("product", taskService.findById(id));
+//            var findproduct = taskService.findById(id);
+//            productForm.setProduct_id(findproduct.product_id());
+//            productForm.setPname(findproduct.pname());
+//            productForm.setPrice(findproduct.price());
+            return "updateInput";
+        }
+
         String image_path = productForm.getImage_path();
         String product_id = productForm.getProduct_id();
         String pname = productForm.getPname();
         int price = productForm.getPrice();
         String cname = productForm.getCname();
+        int category_id = productForm.getCategory_id();
         String description = productForm.getDescription();
-        ProductRecord record = new ProductRecord(image_path,product_id,pname,price,cname,description,id);
+        ProductRecord record = new ProductRecord(image_path,product_id,pname,price,cname,description,id,category_id);
+//        System.out.println(categoryForm);
 
         taskService.update(record);
         return "redirect:/menu";
@@ -105,14 +164,11 @@ public class TaskController {
     }
 
     //削除
-    @GetMapping("/detail")
+    @PostMapping("/detail/{id}")
     public String delete(@PathVariable("id") int id){
         var record = taskService.delete(id);
-        System.out.println("エラー");
         return "redirect:/menu";
     }
-
-    //権限による制御
 
     //ログアウト
 }

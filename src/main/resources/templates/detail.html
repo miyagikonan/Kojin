@@ -26,16 +26,16 @@
         <img src="/images/マッキー.png" class="product-img"><br>
       </div>
 
-      <form action="/menu" method="get" >
+      <form th:action="@{/detail/{id}(id=${product.id})}" method="post" >
         <fieldset class="label-130 product_block">
           <p class="error">エラーメッセージ</p>
           <div>
             <label>商品ID</label>
-            <input type="text" name="productId" th:value="${product.product_id}" readonly class="base-text">
+            <input type="text" name="product_id" th:value="${product.product_id}" readonly class="base-text">
           </div>
           <div>
             <label>商品名</label>
-            <input type="text" name="name" th:value="${product.pname}" readonly class="base-text">
+            <input type="text" name="pname" th:value="${product.pname}" readonly class="base-text">
           </div>
           <div>
             <label>単価</label>
@@ -54,7 +54,7 @@
 
         <div>
           <div class="btns">
-            <input type="submit" value="削除" class="basic-btn">
+            <button type="submit" class="basic-btn">削除</button>
             <a th:href="@{/updateInput/{id}(id=${product.id})}" class="basic-btn">編集</a>
             <input type="button" onclick="location.href='/menu'" value="戻る" class="cancel-btn">
           </div>

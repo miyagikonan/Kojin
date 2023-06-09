@@ -1,9 +1,7 @@
 package com.example.springwbtask.Service;
 
 import com.example.springwbtask.Dao.TaskDao;
-import com.example.springwbtask.Record.ProductRecord;
-import com.example.springwbtask.Record.TaskListRecord;
-import com.example.springwbtask.Record.UserRecord;
+import com.example.springwbtask.Record.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +32,21 @@ public class TaskServiceImpl implements TaskService {
         return taskDao.findById(id);
     }
 
+    @Override
+    public List<CategoryRecord> categoryAll() {
+        return taskDao.categoryAll();
+    }
+
     //更新
     @Override
-    public int update(ProductRecord productRecord){
-        return taskDao.update(productRecord);
+    public int update(ProductRecord updateRecord){
+        return taskDao.update(updateRecord);
+    }
+
+    //新規登録
+    @Override
+    public int insert(InsertRecord insertRecord){
+        return taskDao.insert(insertRecord);
     }
 
     //削除
